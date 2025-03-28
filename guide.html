@@ -333,7 +333,7 @@
             color: white;
             padding: 60px 0;
             text-align: center;
-            margin-bottom: 40px;
+            margin: 40px 0px;
             border-radius: 8px;
         }
 
@@ -477,7 +477,7 @@
             background-color: var(--card-bg);
             padding: 30px;
             border-radius: 8px;
-            margin-top: 40px;
+            margin: 40px 0px;
             text-align: center;
         }
 
@@ -557,6 +557,7 @@
             transition: all 0.3s ease;
             z-index: 99;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: none;
         }
 
         .go-to-top.visible {
@@ -567,7 +568,12 @@
         .go-to-top:hover {
             background-color: var(--hover-color);
         }
-
+        
+        .go-to-top svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
         /* Responsive Styles */
         @media (max-width: 1024px) {
             .guide-cards {
@@ -625,7 +631,7 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSwyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA9LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMGMxMi4xLTEwLjIgMTkuMS0yNC44IDE5LjEtNDBsMjMuMi0xOS43YzguMy03IDExLjQtMTguOCA3LjctMjkuMVMxNDYuNyAxMjggMTM2LjEgMTI4SDEwNmMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTZjMCAxMy4zIDEwLjcgMjQgMjQgMjRoMzBjMTAuNiAwIDE5LjggNi45IDIzLjUgMTcuMSAzLjcgMTAuMi42IDIyLjEtNy43IDI5LjFsLTIzLjIgMTkuN2MtMTIuMSAxMC4yLTE5LjEgMjQuOC0xOS4xIDQwczcuMSAyOS44IDE5LjEgNDBsMjMuMiAxOS43YzguMyA3IDExLjQgMTguOCA3LjcgMjkuMS0zLjcgMTAuMi0xMi45IDE3LjEtMjMuNSAxNy4xSDEwNmMtMTMuMyAwLTI0LTEwLjctMjQtMjR2LTE2YzAtMTEuMyA3LjktMjAuOCAxOC41LTIzLjV6Ii8+PC9zdmc+" alt="EduLearn Logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSwyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMGMxMi4xLTEwLjIgMTkuMS0yNC44IDE5LjEtNDBsMjMuMi0xOS43YzguMy03IDExLjQtMTguOCA3LjctMjkuMVMxNDYuNyAxMjggMTM2LjEgMTI4SDEwNmMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTZjMCAxMy4zIDEwLjcgMjQgMjQgMjRoMzBjMTAuNiAwIDE5LjggNi45IDIzLjUgMTcuMSAzLjcgMTAuMi42IDIyLjEtNy43IDI5LjFsLTIzLjIgMTkuN2MtMTIuMSAxMC4yLTE5LjEgMjQuOC0xOS4xIDQwczcuMSAyOS44IDE5LjEgNDBsMjMuMiAxOS43YzguMyA3IDExLjQgMTguOCA3LjcgMjkuMS0zLjcgMTAuMi0xMi45IDE3LjEtMjMuNSAxNy4xSDEwNmMtMTMuMyAwLTI0LTEwLjctMjQtMjR2LTE2YzAtMTEuMyA3LjktMjAuOCAxOC41LTIzLjV6Ii8+PC9zdmc+" alt="EduLearn Logo">
                 <h1>EduLearn</h1>
             </div>
 
@@ -715,11 +721,31 @@
                         </div>
                         <div class="mobile-subject-dropdown">
                             <ul>
-                                <li><a href="#">Kindergarten</a></li>
-                                <li><a href="#">Elementary School</a></li>
-                                <li><a href="#">Junior High School</a></li>
-                                <li><a href="#">Senior High School</a></li>
-                                <li><a href="#">Undergraduate</a></li>
+                                <li><a href="#">Basic Math</a></li>
+                                <li><a href="#">Alphabet</a></li>
+                                <li><a href="#">Colors & Shapes</a></li>
+                                <li><a href="#">Story Time</a></li>
+                                <li><a href="#">Social Skills</a></li>
+                                <li><a href="#">Mathematics</a></li>
+                                <li><a href="#">English</a></li>
+                                <li><a href="#">Science</a></li>
+                                <li><a href="#">Social Studies</a></li>
+                                <li><a href="#">Art & Music</a></li>
+                                <li><a href="#">Algebra</a></li>
+                                <li><a href="#">Biology</a></li>
+                                <li><a href="#">World History</a></li>
+                                <li><a href="#">Literature</a></li>
+                                <li><a href="#">Geography</a></li>
+                                <li><a href="#">Calculus</a></li>
+                                <li><a href="#">Physics</a></li>
+                                <li><a href="#">Chemistry</a></li>
+                                <li><a href="#">Economics</a></li>
+                                <li><a href="#">Computer Science</a></li>
+                                <li><a href="#">Advanced Mathematics</a></li>
+                                <li><a href="#">Engineering</a></li>
+                                <li><a href="#">Medicine</a></li>
+                                <li><a href="#">Business</a></li>
+                                <li><a href="#">Humanities</a></li>
                             </ul>
                         </div>
                     </li>
@@ -965,7 +991,11 @@
     </footer>
 
     <!-- Go to Top Button -->
-    <div class="go-to-top" title="Go to top">↑</div>
+    <button class="go-to-top" aria-label="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+    </button>
 
     <script>
         // Scroll to top immediately on page load
