@@ -46,7 +46,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.05s;
         }
 
         body {
@@ -494,6 +494,44 @@
             opacity: 0.8;
         }
 
+        /* Go to Top Button */
+        .go-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
+
+        .go-to-top:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-3px);
+        }
+
+        .go-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .go-to-top svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
         /* Responsive Styles */
         @media (max-width: 1024px) {
             .main-content {
@@ -530,6 +568,13 @@
             .switch {
                 margin-left: 0px;
             }
+
+            .go-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
         }
 
         @media (min-width: 769px) {
@@ -543,13 +588,13 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSwyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjhsLTMwLjItMjUuNWMtMTMuMi0xMS0zMi45LTkuNy00NC4xIDMuNXMtOS43IDMyLjkgMy41IDQ0LjFsMTI4IDEwNi42YzYuMSA1LjEgOS45IDEyLjggOS45IDIwLjl2MTQ0YzAgMTMuMyAxMC43IDI0IDI0IDI0aDQwYzEzLjMgMCAyNC0xMC43IDI0LTI0di0xNmMwLTEzLjMtMTAuNy0yNC0yNC0yNGgtMzBjLTEwLjYgMC0xOS44LTYuOS0yMy41LTE3LjFzLS42LTIyLjEgNy43LTI5LjFsMjMuMi0xOS43YzEyLjEtMTAuMiAxOS4xLTI0LjggMTkuMS00MCAwLTE1LjItNy4xLTI5LjgtMTkuMS00MHpNMTI4IDI1NmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSwyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
                 <h1>EduLearn</h1>
             </div>
 
             <nav class="desktop-nav">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li class="subject-menu">
                         <a href="#" id="subject-link">Subjects</a>
                         <div class="subject-dropdown">
@@ -772,6 +817,13 @@
         </div>
     </footer>
 
+    <!-- Go to Top Button -->
+    <button class="go-to-top" aria-label="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+    </button>
+
     <script>
         // Prevent FOUC
         document.addEventListener('DOMContentLoaded', function() {
@@ -884,6 +936,24 @@
                     mobileSubjectToggle.querySelector('span:last-child').textContent = '+';
                 }
             }
+        });
+
+        // Go to Top Button Functionality
+        const goToTopButton = document.querySelector('.go-to-top');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                goToTopButton.classList.add('visible');
+            } else {
+                goToTopButton.classList.remove('visible');
+            }
+        });
+
+        goToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
