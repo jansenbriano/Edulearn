@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn - Modern Educational Platform</title>
+    <style>
+        /* Prevent FOUC */
+        body {
+            visibility: hidden;
+            opacity: 0;
+        }
+        body.loaded {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #f5f7ff;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #e0e0e0;
+            --bg-color: #ffffff;
+            --card-bg: #f9f9f9;
+            --footer-bg: #2c3e50;
+            --footer-text: #ecf0f1;
+            --hover-color: #3a56d4;
+        }
+
+        .dark-mode {
+            --primary-color: #5d7eff;
+            --secondary-color: #1a1a2e;
+            --text-color: #f0f0f0;
+            --light-text: #b0b0b0;
+            --border-color: #444;
+            --bg-color: #16213e;
+            --card-bg: #0f3460;
+            --footer-bg: #1a1a2e;
+            --footer-text: #e2e2e2;
+            --hover-color: #4a6bff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Navigation Styles */
+        nav.desktop-nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav.desktop-nav ul li {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        nav.desktop-nav ul li a {
+            padding: 8px 12px;
+            font-weight: 500;
+            color: var(--text-color);
+            border-radius: 4px;
+        }
+
+        nav.desktop-nav ul li a:hover {
+            color: var(--primary-color);
+            background-color: var(--secondary-color);
+        }
+
+        /* Subject Dropdown - Desktop */
+        .subject-dropdown {
+            position: fixed;
+            top: 61px;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            display: none;
+            border-top: 1px solid var(--border-color);
+            z-index: 999;
+            width: 100%;
+        }
+
+        .subject-dropdown.active {
+            display: block;
+        }
+
+        .subject-columns {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(180px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .subject-column {
+            min-width: 0;
+        }
+
+        .subject-column h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1rem;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .subject-column ul {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .subject-column ul li {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+
+        .subject-column ul li a {
+            color: var(--text-color);
+            display: inline-block;
+            padding: 6px 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            transition: all 0.2s ease;
+            transform-origin: center;
+            width: 100%;
+            max-width: 160px;
+            border-radius: 4px;
+        }
+
+        .subject-column ul li a:hover {
+            color: var(--primary-color);
+            background-color: rgba(74, 107, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* Theme Toggle - Desktop */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-left: 10px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        nav.mobile-nav {
+            position: fixed;
+            top: 61px;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            z-index: 998;
+        }
+
+        nav.mobile-nav.active {
+            max-height: calc(100vh - 61px);
+            overflow-y: auto;
+        }
+
+        nav.mobile-nav ul li {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav.mobile-nav ul li a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--text-color);
+        }
+
+        nav.mobile-nav ul li a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Mobile Subject Dropdown */
+        .mobile-subject-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .mobile-subject-toggle:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .mobile-subject-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--card-bg);
+        }
+
+        .mobile-subject-dropdown.active {
+            max-height: 1000px;
+        }
+
+        .mobile-subject-dropdown ul li a {
+            padding-left: 40px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            padding: 40px 0;
+        }
+
+        .content {
+            flex: 3;
+            padding-right: 30px;
+        }
+
+        .sidebar {
+            flex: 1;
+        }
+
+        /* Article Styles */
+        .article {
+            margin-bottom: 30px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 20px;
+        }
+
+        .article-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .article-meta {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .article-excerpt {
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .read-more:hover {
+            background-color: var(--hover-color);
+        }
+
+        /* Sidebar Styles */
+        .sidebar-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-links li a {
+            display: block;
+            padding: 8px 0;
+            color: var(--text-color);
+        }
+
+        .sidebar-links li a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        /* Newsletter Form */
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .newsletter-form input,
+        .newsletter-form textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .newsletter-form button {
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--hover-color);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 40px 0 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--footer-text);
+            opacity: 0.8;
+        }
+
+        .footer-column ul li a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .content {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+
+            .subject-columns {
+                grid-template-columns: repeat(3, minmax(180px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav.desktop-nav,
+            .theme-toggle.desktop {
+                display: none;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .subject-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-column {
+                margin-bottom: 20px;
+            }
+            .switch {
+                margin-left: 0px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            nav.mobile-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSwyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjhsLTMwLjItMjUuNWMtMTMuMi0xMS0zMi45LTkuNy00NC4xIDMuNXMtOS43IDMyLjkgMy41IDQ0LjFsMTI4IDEwNi42YzYuMSA1LjEgOS45IDEyLjggOS45IDIwLjl2MTQ0YzAgMTMuMyAxMC43IDI0IDI0IDI0aDQwYzEzLjMgMCAyNC0xMC43IDI0LTI0di0xNmMwLTEzLjMtMTAuNy0yNC0yNC0yNGgtMzBjLTEwLjYgMC0xOS44LTYuOS0yMy41LTE3LjFzLS42LTIyLjEgNy43LTI5LjFsMjMuMi0xOS43YzEyLjEtMTAuMiAxOS4xLTI0LjggMTkuMS00MCAwLTE1LjItNy4xLTI5LjgtMTkuMS00MHpNMTI4IDI1NmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
+                <h1>EduLearn</h1>
+            </div>
+
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li class="subject-menu">
+                        <a href="#" id="subject-link">Subjects</a>
+                        <div class="subject-dropdown">
+                            <div class="subject-columns">
+                                <div class="subject-column">
+                                    <h3>Kindergarten</h3>
+                                    <ul>
+                                        <li><a href="#">Basic Math</a></li>
+                                        <li><a href="#">Alphabet</a></li>
+                                        <li><a href="#">Colors & Shapes</a></li>
+                                        <li><a href="#">Story Time</a></li>
+                                        <li><a href="#">Social Skills</a></li>
+                                    </ul>
+                                </div>
+                                <div class="subject-column">
+                                    <h3>Elementary School</h3>
+                                    <ul>
+                                        <li><a href="#">Mathematics</a></li>
+                                        <li><a href="#">English</a></li>
+                                        <li><a href="#">Science</a></li>
+                                        <li><a href="#">Social Studies</a></li>
+                                        <li><a href="#">Art & Music</a></li>
+                                    </ul>
+                                </div>
+                                <div class="subject-column">
+                                    <h3>Junior High School</h3>
+                                    <ul>
+                                        <li><a href="#">Algebra</a></li>
+                                        <li><a href="#">Biology</a></li>
+                                        <li><a href="#">World History</a></li>
+                                        <li><a href="#">Literature</a></li>
+                                        <li><a href="#">Geography</a></li>
+                                    </ul>
+                                </div>
+                                <div class="subject-column">
+                                    <h3>Senior High School</h3>
+                                    <ul>
+                                        <li><a href="#">Calculus</a></li>
+                                        <li><a href="#">Physics</a></li>
+                                        <li><a href="#">Chemistry</a></li>
+                                        <li><a href="#">Economics</a></li>
+                                        <li><a href="#">Computer Science</a></li>
+                                    </ul>
+                                </div>
+                                <div class="subject-column">
+                                    <h3>Undergraduate</h3>
+                                    <ul>
+                                        <li><a href="#">Advanced Mathematics</a></li>
+                                        <li><a href="#">Engineering</a></li>
+                                        <li><a href="#">Medicine</a></li>
+                                        <li><a href="#">Business</a></li>
+                                        <li><a href="#">Humanities</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="theme-toggle desktop">
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-nav-toggle" aria-controls="mobile-navigation" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav class="mobile-nav" id="mobile-navigation">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li>
+                        <div class="mobile-subject-toggle">
+                            <span>Subjects</span>
+                            <span>+</span>
+                        </div>
+                        <div class="mobile-subject-dropdown">
+                            <ul>
+                                <li><a href="#">Kindergarten</a></li>
+                                <li><a href="#">Elementary School</a></li>
+                                <li><a href="#">Junior High School</a></li>
+                                <li><a href="#">Senior High School</a></li>
+                                <li><a href="#">Undergraduate</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="theme-toggle mobile">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0px;">
+                            <label class="switch">
+                                <input type="checkbox" id="mobile-theme-toggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <div class="content">
+                <article class="article">
+                    <img src="C:\Users\MyLaptop\Desktop\image.webp" alt="Education" class="article-img">
+                    <div class="article-content">
+                        <h2 class="article-title">The Future of Online Education</h2>
+                        <div class="article-meta">Posted on June 15, 2023 by Admin</div>
+                        <p class="article-excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="article">
+                    <img src="C:\Users\MyLaptop\Desktop\image.webp" alt="Students" class="article-img">
+                    <div class="article-content">
+                        <h2 class="article-title">Effective Study Techniques</h2>
+                        <div class="article-meta">Posted on June 10, 2023 by Educator</div>
+                        <p class="article-excerpt">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="article">
+                    <img src="C:\Users\MyLaptop\Desktop\image.webp" alt="Technology" class="article-img">
+                    <div class="article-content">
+                        <h2 class="article-title">Technology in Modern Classrooms</h2>
+                        <div class="article-meta">Posted on June 5, 2023 by Tech Expert</div>
+                        <p class="article-excerpt">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Popular Topics</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#">Mathematics Fundamentals</a></li>
+                        <li><a href="#">Science Experiments</a></li>
+                        <li><a href="#">History Timeline</a></li>
+                        <li><a href="#">Literature Analysis</a></li>
+                        <li><a href="#">Programming Basics</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Recently Added</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#">Advanced Calculus</a></li>
+                        <li><a href="#">Organic Chemistry</a></li>
+                        <li><a href="#">World War II History</a></li>
+                        <li><a href="#">Creative Writing</a></li>
+                        <li><a href="#">Data Structures</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Subscribe to Newsletter</h3>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message (Optional)" rows="3"></textarea>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><a href="mailto:info@edulearn.com">info@edulearn.com</a></li>
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
+                        <li>123 Education St, Learning City</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Study Guides</a></li>
+                        <li><a href="#">Practice Tests</a></li>
+                        <li><a href="#">Educational Videos</a></li>
+                        <li><a href="#">Teacher Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 EduLearn. All rights reserved. | Designed with ❤️ for education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Prevent FOUC
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('loaded');
+            
+            // Force light mode on load
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light-mode');
+            document.getElementById('theme-toggle').checked = false;
+            document.getElementById('mobile-theme-toggle').checked = false;
+        });
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        const body = document.body;
+
+        // Theme toggle handlers
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        });
+
+        mobileThemeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+            // Close mobile menu after theme change
+            mobileNav.classList.remove('active');
+            mobileNavToggle.setAttribute('aria-expanded', 'false');
+        });
+
+        // Subject Dropdown - Desktop
+        const subjectLink = document.getElementById('subject-link');
+        const subjectDropdown = document.querySelector('.subject-dropdown');
+
+        subjectLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            subjectDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.subject-menu') && subjectDropdown.classList.contains('active')) {
+                subjectDropdown.classList.remove('active');
+            }
+        });
+
+        // Close dropdown on scroll
+        window.addEventListener('scroll', function() {
+            if (subjectDropdown.classList.contains('active')) {
+                subjectDropdown.classList.remove('active');
+            }
+        });
+
+        // Mobile Navigation Toggle
+        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const mobileNav = document.getElementById('mobile-navigation');
+
+        mobileNavToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            mobileNav.classList.toggle('active');
+        });
+
+        // Mobile Subject Dropdown Toggle
+        const mobileSubjectToggle = document.querySelector('.mobile-subject-toggle');
+        const mobileSubjectDropdown = document.querySelector('.mobile-subject-dropdown');
+
+        if (mobileSubjectToggle) {
+            mobileSubjectToggle.addEventListener('click', function() {
+                const isExpanded = this.querySelector('span:last-child').textContent === '-';
+                this.querySelector('span:last-child').textContent = isExpanded ? '+' : '-';
+                mobileSubjectDropdown.classList.toggle('active');
+            });
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.header-container') && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+                
+                // Also close any open subject dropdowns
+                if (mobileSubjectDropdown.classList.contains('active')) {
+                    mobileSubjectDropdown.classList.remove('active');
+                    mobileSubjectToggle.querySelector('span:last-child').textContent = '+';
+                }
+            }
+        });
+
+        // Close mobile menu on scroll
+        window.addEventListener('scroll', function() {
+            if (mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+                
+                // Also close any open subject dropdowns
+                if (mobileSubjectDropdown.classList.contains('active')) {
+                    mobileSubjectDropdown.classList.remove('active');
+                    mobileSubjectToggle.querySelector('span:last-child').textContent = '+';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
