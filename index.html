@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduLearn - Modern Educational Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Prevent FOUC */
         body {
@@ -158,6 +159,7 @@
 
         .subject-column {
             min-width: 0;
+            position: relative;
         }
 
         .subject-column h3 {
@@ -168,6 +170,39 @@
             font-size: 1rem;
             white-space: nowrap;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .subject-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .subject-filters button {
+            padding: 4px 10px;
+            border-radius: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .subject-filters button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .subject-filters button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
 
         .subject-column ul {
@@ -180,21 +215,30 @@
             display: flex;
             justify-content: center;
             margin-bottom: 0;
+            transition: all 0.3s ease;
         }
 
         .subject-column ul li a {
             color: var(--text-color);
-            display: inline-block;
+            display: flex;
+            align-items: center;
             padding: 6px 12px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            text-align: center;
+            text-align: left;
             transition: all 0.2s ease;
             transform-origin: center;
             width: 100%;
             max-width: 160px;
             border-radius: 4px;
+            gap: 8px;
+        }
+
+        .subject-column ul li a i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.9rem;
         }
 
         .subject-column ul li a:hover {
@@ -323,8 +367,20 @@
             max-height: 1000px;
         }
 
+        .mobile-subject-dropdown ul {
+            padding-left: 0;
+        }
+
         .mobile-subject-dropdown ul li a {
-            padding-left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 30px;
+        }
+
+        .mobile-subject-dropdown ul li a i {
+            width: 18px;
+            text-align: center;
         }
 
         /* Main Content */
@@ -588,74 +644,105 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSwyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSAyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
                 <h1>EduLearn</h1>
             </div>
 
             <nav class="desktop-nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li class="subject-menu">
-                        <a href="#" id="subject-link">Subjects</a>
+                        <a href="#" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
                         <div class="subject-dropdown">
                             <div class="subject-columns">
                                 <div class="subject-column">
-                                    <h3>Kindergarten</h3>
+                                    <h3><i class="fas fa-child"></i> Kindergarten</h3>
+                                    <div class="subject-filters">
+                                        <button class="active" data-filter="all">All</button>
+                                        <button data-filter="math">Math</button>
+                                        <button data-filter="language">Language</button>
+                                        <button data-filter="science">Science</button>
+                                    </div>
                                     <ul>
-                                        <li><a href="#">Basic Math</a></li>
-                                        <li><a href="#">Alphabet</a></li>
-                                        <li><a href="#">Colors & Shapes</a></li>
-                                        <li><a href="#">Story Time</a></li>
-                                        <li><a href="#">Social Skills</a></li>
+                                        <li data-category="math"><a href="#"><i class="fas fa-square-root-alt"></i> Basic Math</a></li>
+                                        <li data-category="language"><a href="#"><i class="fas fa-font"></i> Alphabet</a></li>
+                                        <li data-category="language"><a href="#"><i class="fas fa-book-reader"></i> Story Time</a></li>
+                                        <li data-category="science"><a href="#"><i class="fas fa-flask"></i> Simple Science</a></li>
+                                        <li data-category="math"><a href="#"><i class="fas fa-shapes"></i> Shapes & Colors</a></li>
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3>Elementary School</h3>
+                                    <h3><i class="fas fa-school"></i> Elementary</h3>
+                                    <div class="subject-filters">
+                                        <button class="active" data-filter="all">All</button>
+                                        <button data-filter="math">Math</button>
+                                        <button data-filter="language">Language</button>
+                                        <button data-filter="science">Science</button>
+                                    </div>
                                     <ul>
-                                        <li><a href="#">Mathematics</a></li>
-                                        <li><a href="#">English</a></li>
-                                        <li><a href="#">Science</a></li>
-                                        <li><a href="#">Social Studies</a></li>
-                                        <li><a href="#">Art & Music</a></li>
+                                        <li data-category="math"><a href="#"><i class="fas fa-calculator"></i> Mathematics</a></li>
+                                        <li data-category="language"><a href="#"><i class="fas fa-language"></i> English</a></li>
+                                        <li data-category="science"><a href="#"><i class="fas fa-atom"></i> Science</a></li>
+                                        <li data-category="social"><a href="#"><i class="fas fa-globe-americas"></i> Social Studies</a></li>
+                                        <li data-category="arts"><a href="#"><i class="fas fa-paint-brush"></i> Art & Music</a></li>
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3>Junior High School</h3>
+                                    <h3><i class="fas fa-user-graduate"></i> Junior High</h3>
+                                    <div class="subject-filters">
+                                        <button class="active" data-filter="all">All</button>
+                                        <button data-filter="math">Math</button>
+                                        <button data-filter="science">Science</button>
+                                        <button data-filter="humanities">Humanities</button>
+                                    </div>
                                     <ul>
-                                        <li><a href="#">Algebra</a></li>
-                                        <li><a href="#">Biology</a></li>
-                                        <li><a href="#">World History</a></li>
-                                        <li><a href="#">Literature</a></li>
-                                        <li><a href="#">Geography</a></li>
+                                        <li data-category="math"><a href="#"><i class="fas fa-x-ray"></i> Algebra</a></li>
+                                        <li data-category="science"><a href="#"><i class="fas fa-dna"></i> Biology</a></li>
+                                        <li data-category="humanities"><a href="#"><i class="fas fa-landmark"></i> World History</a></li>
+                                        <li data-category="language"><a href="#"><i class="fas fa-book-open"></i> Literature</a></li>
+                                        <li data-category="science"><a href="#"><i class="fas fa-mountain"></i> Earth Science</a></li>
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3>Senior High School</h3>
+                                    <h3><i class="fas fa-graduation-cap"></i> High School</h3>
+                                    <div class="subject-filters">
+                                        <button class="active" data-filter="all">All</button>
+                                        <button data-filter="math">Math</button>
+                                        <button data-filter="science">Science</button>
+                                        <button data-filter="college">College Prep</button>
+                                    </div>
                                     <ul>
-                                        <li><a href="#">Calculus</a></li>
-                                        <li><a href="#">Physics</a></li>
-                                        <li><a href="#">Chemistry</a></li>
-                                        <li><a href="#">Economics</a></li>
-                                        <li><a href="#">Computer Science</a></li>
+                                        <li data-category="math"><a href="#"><i class="fas fa-calculator"></i> Calculus</a></li>
+                                        <li data-category="science"><a href="#"><i class="fas fa-atom"></i> Physics</a></li>
+                                        <li data-category="science"><a href="#"><i class="fas fa-vial"></i> Chemistry</a></li>
+                                        <li data-category="college"><a href="#"><i class="fas fa-chart-line"></i> Economics</a></li>
+                                        <li data-category="tech"><a href="#"><i class="fas fa-laptop-code"></i> Computer Science</a></li>
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3>Undergraduate</h3>
+                                    <h3><i class="fas fa-university"></i> Undergraduate</h3>
+                                    <div class="subject-filters">
+                                        <button class="active" data-filter="all">All</button>
+                                        <button data-filter="stem">STEM</button>
+                                        <button data-filter="business">Business</button>
+                                        <button data-filter="humanities">Humanities</button>
+                                    </div>
                                     <ul>
-                                        <li><a href="#">Advanced Mathematics</a></li>
-                                        <li><a href="#">Engineering</a></li>
-                                        <li><a href="#">Medicine</a></li>
-                                        <li><a href="#">Business</a></li>
-                                        <li><a href="#">Humanities</a></li>
+                                        <li data-category="stem"><a href="#"><i class="fas fa-infinity"></i> Advanced Math</a></li>
+                                        <li data-category="stem"><a href="#"><i class="fas fa-robot"></i> Engineering</a></li>
+                                        <li data-category="stem"><a href="#"><i class="fas fa-heartbeat"></i> Medicine</a></li>
+                                        <li data-category="business"><a href="#"><i class="fas fa-chart-pie"></i> Business</a></li>
+                                        <li data-category="humanities"><a href="#"><i class="fas fa-theater-masks"></i> Humanities</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li><a href="guide.html">Guide</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="guide.html"><i class="fas fa-map"></i> Guide</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                     <li class="theme-toggle desktop">
+                        <span><i class="fas fa-moon"></i></span>
                         <label class="switch">
                             <input type="checkbox" id="theme-toggle">
                             <span class="slider"></span>
@@ -670,27 +757,28 @@
 
             <nav class="mobile-nav" id="mobile-navigation">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li>
                         <div class="mobile-subject-toggle">
-                            <span>Subjects</span>
+                            <span><i class="fas fa-book-open"></i> Subjects</span>
                             <span>+</span>
                         </div>
                         <div class="mobile-subject-dropdown">
                             <ul>
-                                <li><a href="#">Kindergarten</a></li>
-                                <li><a href="#">Elementary School</a></li>
-                                <li><a href="#">Junior High School</a></li>
-                                <li><a href="#">Senior High School</a></li>
-                                <li><a href="#">Undergraduate</a></li>
+                                <li><a href="#"><i class="fas fa-child"></i> Kindergarten</a></li>
+                                <li><a href="#"><i class="fas fa-school"></i> Elementary</a></li>
+                                <li><a href="#"><i class="fas fa-user-graduate"></i> Junior High</a></li>
+                                <li><a href="#"><i class="fas fa-graduation-cap"></i> High School</a></li>
+                                <li><a href="#"><i class="fas fa-university"></i> Undergraduate</a></li>
                             </ul>
                         </div>
                     </li>
-                    <li><a href="guide.html">Guide</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="guide.html"><i class="fas fa-map"></i> Guide</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                     <li class="theme-toggle mobile">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
+                            <span><i class="fas fa-moon"></i> Dark Mode</span>
                             <label class="switch">
                                 <input type="checkbox" id="mobile-theme-toggle">
                                 <span class="slider"></span>
@@ -740,22 +828,22 @@
                 <div class="sidebar-card">
                     <h3 class="sidebar-title">Popular Topics</h3>
                     <ul class="sidebar-links">
-                        <li><a href="#">Mathematics Fundamentals</a></li>
-                        <li><a href="#">Science Experiments</a></li>
-                        <li><a href="#">History Timeline</a></li>
-                        <li><a href="#">Literature Analysis</a></li>
-                        <li><a href="#">Programming Basics</a></li>
+                        <li><a href="#"><i class="fas fa-square-root-alt"></i> Mathematics Fundamentals</a></li>
+                        <li><a href="#"><i class="fas fa-flask"></i> Science Experiments</a></li>
+                        <li><a href="#"><i class="fas fa-landmark"></i> History Timeline</a></li>
+                        <li><a href="#"><i class="fas fa-book-open"></i> Literature Analysis</a></li>
+                        <li><a href="#"><i class="fas fa-code"></i> Programming Basics</a></li>
                     </ul>
                 </div>
 
                 <div class="sidebar-card">
                     <h3 class="sidebar-title">Recently Added</h3>
                     <ul class="sidebar-links">
-                        <li><a href="#">Advanced Calculus</a></li>
-                        <li><a href="#">Organic Chemistry</a></li>
-                        <li><a href="#">World War II History</a></li>
-                        <li><a href="#">Creative Writing</a></li>
-                        <li><a href="#">Data Structures</a></li>
+                        <li><a href="#"><i class="fas fa-calculator"></i> Advanced Calculus</a></li>
+                        <li><a href="#"><i class="fas fa-vial"></i> Organic Chemistry</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> World War II History</a></li>
+                        <li><a href="#"><i class="fas fa-pen-fancy"></i> Creative Writing</a></li>
+                        <li><a href="#"><i class="fas fa-project-diagram"></i> Data Structures</a></li>
                     </ul>
                 </div>
 
@@ -764,7 +852,7 @@
                     <form class="newsletter-form">
                         <input type="email" placeholder="Your Email" required>
                         <textarea placeholder="Your Message (Optional)" rows="3"></textarea>
-                        <button type="submit">Subscribe</button>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
                     </form>
                 </div>
             </aside>
@@ -777,37 +865,37 @@
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul>
-                        <li><a href="mailto:info@edulearn.com">info@edulearn.com</a></li>
-                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
-                        <li>123 Education St, Learning City</li>
+                        <li><a href="mailto:info@edulearn.com"><i class="fas fa-envelope"></i> info@edulearn.com</a></li>
+                        <li><a href="tel:+1234567890"><i class="fas fa-phone"></i> +1 (234) 567-890</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education St, Learning City</li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="#">Courses</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Courses</a></li>
+                        <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Resources</h3>
                     <ul>
-                        <li><a href="#">Study Guides</a></li>
-                        <li><a href="#">Practice Tests</a></li>
-                        <li><a href="#">Educational Videos</a></li>
-                        <li><a href="#">Teacher Resources</a></li>
+                        <li><a href="#"><i class="fas fa-book-reader"></i> Study Guides</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-check"></i> Practice Tests</a></li>
+                        <li><a href="#"><i class="fas fa-video"></i> Educational Videos</a></li>
+                        <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teacher Resources</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                        <li><a href="#">GDPR Compliance</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-cookie-bite"></i> Cookie Policy</a></li>
+                        <li><a href="#"><i class="fas fa-gavel"></i> GDPR Compliance</a></li>
                     </ul>
                 </div>
             </div>
@@ -957,6 +1045,29 @@
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
+            });
+        });
+
+        // Subject Filter Functionality
+        document.querySelectorAll('.subject-filters button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const column = this.closest('.subject-column');
+                
+                // Update active state
+                column.querySelectorAll('.subject-filters button').forEach(b => {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Filter items
+                const filter = this.dataset.filter;
+                column.querySelectorAll('ul li').forEach(item => {
+                    if (filter === 'all') {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = item.dataset.category === filter ? 'flex' : 'none';
+                    }
+                });
             });
         });
     </script>
