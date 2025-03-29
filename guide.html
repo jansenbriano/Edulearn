@@ -998,23 +998,21 @@
     </button>
 
     <script>
-        // Scroll to top immediately on page load
-        window.onbeforeunload = function() {
-            window.scrollTo(0, 0);
-        };
-
-        // Prevent FOUC
+        // Prevent FOUC and handle theme persistence
         document.addEventListener('DOMContentLoaded', function() {
-            document.body.classList.add('loaded');
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
             
-            // Force light mode on load
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light-mode');
-            document.getElementById('theme-toggle').checked = false;
-            document.getElementById('mobile-theme-toggle').checked = false;
-
-            // Scroll to top after DOM is loaded (just in case)
-            window.scrollTo(0, 0);
+            // Apply saved theme if it exists
+            if (savedTheme === 'dark-mode') {
+                body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').checked = true;
+                document.getElementById('mobile-theme-toggle').checked = true;
+            }
+            
+            // Now show the page
+            document.body.classList.add('loaded');
 
             // Initialize accordion functionality
             const accordionItems = document.querySelectorAll('.accordion-item');
@@ -1045,24 +1043,22 @@
         const body = document.body;
 
         // Theme toggle handlers
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
+        function toggleTheme(isDark) {
+            if (isDark) {
                 body.classList.add('dark-mode');
                 localStorage.setItem('theme', 'dark-mode');
             } else {
                 body.classList.remove('dark-mode');
                 localStorage.setItem('theme', 'light-mode');
             }
+        }
+
+        themeToggle.addEventListener('change', function() {
+            toggleTheme(this.checked);
         });
 
         mobileThemeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light-mode');
-            }
+            toggleTheme(this.checked);
             // Close mobile menu after theme change
             mobileNav.classList.remove('active');
             mobileNavToggle.setAttribute('aria-expanded', 'false');
