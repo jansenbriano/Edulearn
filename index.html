@@ -670,7 +670,7 @@
 
             <nav class="mobile-nav" id="mobile-navigation">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li>
                         <div class="mobile-subject-toggle">
                             <span>Subjects</span>
@@ -785,11 +785,11 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About Us</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
                         <li><a href="#">Courses</a></li>
                         <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -825,15 +825,21 @@
     </button>
 
     <script>
-        // Prevent FOUC
+        // Prevent FOUC and handle theme persistence
         document.addEventListener('DOMContentLoaded', function() {
-            document.body.classList.add('loaded');
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
             
-            // Force light mode on load
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light-mode');
-            document.getElementById('theme-toggle').checked = false;
-            document.getElementById('mobile-theme-toggle').checked = false;
+            // Apply saved theme if it exists
+            if (savedTheme === 'dark-mode') {
+                body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').checked = true;
+                document.getElementById('mobile-theme-toggle').checked = true;
+            }
+            
+            // Now show the page
+            document.body.classList.add('loaded');
         });
 
         // Theme Toggle Functionality
@@ -842,24 +848,22 @@
         const body = document.body;
 
         // Theme toggle handlers
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
+        function toggleTheme(isDark) {
+            if (isDark) {
                 body.classList.add('dark-mode');
                 localStorage.setItem('theme', 'dark-mode');
             } else {
                 body.classList.remove('dark-mode');
                 localStorage.setItem('theme', 'light-mode');
             }
+        }
+
+        themeToggle.addEventListener('change', function() {
+            toggleTheme(this.checked);
         });
 
         mobileThemeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light-mode');
-            }
+            toggleTheme(this.checked);
             // Close mobile menu after theme change
             mobileNav.classList.remove('active');
             mobileNavToggle.setAttribute('aria-expanded', 'false');
