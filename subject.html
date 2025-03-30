@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduLearn - Modern Educational Platform</title>
+    <title>All Subjects - EduLearn</title>
+    <meta name="description" content="Browse all educational subjects available on EduLearn, from Kindergarten to Undergraduate level.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Prevent FOUC */
@@ -383,128 +384,184 @@
             text-align: center;
         }
 
-        /* Main Content */
-        .main-content {
-            display: flex;
-            padding: 40px 0;
+        /* Subject Page Specific Styles */
+        .subject-hero {
+            text-align: center;
+            padding: 50px 0 30px;
         }
 
-        .content {
-            flex: 3;
-            padding-right: 30px;
+        .subject-hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
         }
 
-        .sidebar {
-            flex: 1;
+        .subject-hero p {
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
         }
 
-        /* Article Styles */
-        .article {
-            margin-bottom: 30px;
+        .subject-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .subject-category {
             background-color: var(--card-bg);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        .article-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+        .subject-category:hover {
+            transform: translateY(-5px);
         }
 
-        .article-content {
-            padding: 20px;
+        .category-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .article-title {
-            font-size: 1.5rem;
+        .category-header i {
+            font-size: 1.2rem;
+        }
+
+        .category-header h2 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .subject-list-container {
+            max-height: 400px; /* Fixed height for scrollable container */
+            overflow-y: auto;
+            padding: 0 10px;
+        }
+
+        .subject-list {
+            padding: 15px 10px;
+        }
+
+        .subject-list li {
             margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .subject-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .subject-list a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+        }
+
+        .subject-list a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .subject-list i {
+            width: 20px;
+            text-align: center;
             color: var(--primary-color);
         }
 
-        .article-meta {
+        /* Custom scrollbar */
+        .subject-list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .subject-list-container::-webkit-scrollbar-track {
+            background: var(--card-bg);
+            border-radius: 4px;
+        }
+
+        .subject-list-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .subject-list-container::-webkit-scrollbar-thumb:hover {
+            background: var(--hover-color);
+        }
+
+        .popular-subjects {
+            margin: 60px 0 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .popular-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .popular-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .popular-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .popular-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .popular-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .popular-card p {
             color: var(--light-text);
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
 
-        .article-excerpt {
-            margin-bottom: 15px;
-        }
-
-        .read-more {
+        .popular-link {
             display: inline-block;
             padding: 8px 15px;
             background-color: var(--primary-color);
             color: white;
             border-radius: 4px;
-            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
-        .read-more:hover {
-            background-color: var(--hover-color);
-        }
-
-        /* Sidebar Styles */
-        .sidebar-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .sidebar-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .sidebar-links li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar-links li a {
-            display: block;
-            padding: 8px 0;
-            color: var(--text-color);
-        }
-
-        .sidebar-links li a:hover {
-            color: var(--primary-color);
-            padding-left: 5px;
-        }
-
-        /* Newsletter Form */
-        .newsletter-form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .newsletter-form input,
-        .newsletter-form textarea {
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        .newsletter-form button {
-            padding: 10px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .newsletter-form button:hover {
+        .popular-link:hover {
             background-color: var(--hover-color);
         }
 
@@ -590,17 +647,12 @@
 
         /* Responsive Styles */
         @media (max-width: 1024px) {
-            .main-content {
-                flex-direction: column;
+            .subject-categories {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
             
-            .content {
-                padding-right: 0;
-                margin-bottom: 30px;
-            }
-
-            .subject-columns {
-                grid-template-columns: repeat(3, minmax(180px, 1fr));
+            .popular-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             }
         }
 
@@ -625,6 +677,14 @@
                 margin-left: 0px;
             }
 
+            .subject-hero h1 {
+                font-size: 2rem;
+            }
+
+            .subject-hero p {
+                font-size: 1rem;
+            }
+
             .go-to-top {
                 width: 45px;
                 height: 45px;
@@ -644,7 +704,7 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSAyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSAyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA9LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
                 <h1>EduLearn</h1>
             </div>
 
@@ -652,7 +712,7 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li class="subject-menu">
-                        <a href="subject.html" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
+                        <a href="#" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
                         <div class="subject-dropdown">
                             <div class="subject-columns">
                                 <div class="subject-column">
@@ -791,72 +851,176 @@
     </header>
 
     <main class="container">
-        <div class="main-content">
-            <div class="content">
-                <article class="article">
-                    <img src="image.webp" alt="Education" class="article-img">
-                    <div class="article-content">
-                        <h2 class="article-title">The Future of Online Education</h2>
-                        <div class="article-meta">Posted on June 15, 2023 by Admin</div>
-                        <p class="article-excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
-                        <a href="#" class="read-more">Read More</a>
-                    </div>
-                </article>
+        <!-- Subject Hero Section -->
+        <section class="subject-hero">
+            <h1>Explore Our Subjects</h1>
+            <p>Browse our comprehensive collection of educational subjects, carefully organized by grade level and category to support your learning journey.</p>
+        </section>
 
-                <article class="article">
-                    <img src="image.webp" alt="Students" class="article-img">
-                    <div class="article-content">
-                        <h2 class="article-title">Effective Study Techniques</h2>
-                        <div class="article-meta">Posted on June 10, 2023 by Educator</div>
-                        <p class="article-excerpt">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
-                        <a href="#" class="read-more">Read More</a>
-                    </div>
-                </article>
-
-                <article class="article">
-                    <img src="image.webp" alt="Technology" class="article-img">
-                    <div class="article-content">
-                        <h2 class="article-title">Technology in Modern Classrooms</h2>
-                        <div class="article-meta">Posted on June 5, 2023 by Tech Expert</div>
-                        <p class="article-excerpt">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
-                        <a href="#" class="read-more">Read More</a>
-                    </div>
-                </article>
+        <!-- Subject Categories -->
+        <div class="subject-categories">
+            <!-- Kindergarten -->
+            <div class="subject-category">
+                <div class="category-header">
+                    <i class="fas fa-child"></i>
+                    <h2>Kindergarten</h2>
+                </div>
+                <div class="subject-list-container">
+                    <ul class="subject-list">
+                        <li><a href="#"><i class="fas fa-square-root-alt"></i> Basic Math</a></li>
+                        <li><a href="#"><i class="fas fa-font"></i> Alphabet</a></li>
+                        <li><a href="#"><i class="fas fa-shapes"></i> Shapes & Colors</a></li>
+                        <li><a href="#"><i class="fas fa-book-reader"></i> Story Time</a></li>
+                        <li><a href="#"><i class="fas fa-flask"></i> Simple Science</a></li>
+                        <li><a href="#"><i class="fas fa-music"></i> Nursery Rhymes</a></li>
+                        <li><a href="#"><i class="fas fa-hand-holding-heart"></i> Social Skills</a></li>
+                        <li><a href="#"><i class="fas fa-running"></i> Physical Activities</a></li>
+                        <li><a href="#"><i class="fas fa-puzzle-piece"></i> Problem Solving</a></li>
+                        <li><a href="#"><i class="fas fa-seedling"></i> Nature Exploration</a></li>
+                        <li><a href="#"><i class="fas fa-hands-helping"></i> Teamwork</a></li>
+                        <li><a href="#"><i class="fas fa-paint-brush"></i> Creative Arts</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <aside class="sidebar">
-                <div class="sidebar-card">
-                    <h3 class="sidebar-title">Popular Topics</h3>
-                    <ul class="sidebar-links">
-                        <li><a href="#"><i class="fas fa-square-root-alt"></i> Mathematics Fundamentals</a></li>
-                        <li><a href="#"><i class="fas fa-flask"></i> Science Experiments</a></li>
-                        <li><a href="#"><i class="fas fa-landmark"></i> History Timeline</a></li>
-                        <li><a href="#"><i class="fas fa-book-open"></i> Literature Analysis</a></li>
-                        <li><a href="#"><i class="fas fa-code"></i> Programming Basics</a></li>
-                    </ul>
+            <!-- Elementary -->
+            <div class="subject-category">
+                <div class="category-header">
+                    <i class="fas fa-school"></i>
+                    <h2>Elementary</h2>
                 </div>
-
-                <div class="sidebar-card">
-                    <h3 class="sidebar-title">Recently Added</h3>
-                    <ul class="sidebar-links">
-                        <li><a href="#"><i class="fas fa-calculator"></i> Advanced Calculus</a></li>
-                        <li><a href="#"><i class="fas fa-vial"></i> Organic Chemistry</a></li>
-                        <li><a href="#"><i class="fas fa-history"></i> World War II History</a></li>
+                <div class="subject-list-container">
+                    <ul class="subject-list">
+                        <li><a href="#"><i class="fas fa-calculator"></i> Mathematics</a></li>
+                        <li><a href="#"><i class="fas fa-language"></i> English</a></li>
+                        <li><a href="#"><i class="fas fa-atom"></i> Science</a></li>
+                        <li><a href="#"><i class="fas fa-globe-americas"></i> Social Studies</a></li>
+                        <li><a href="#"><i class="fas fa-paint-brush"></i> Art & Music</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Reading Comprehension</a></li>
                         <li><a href="#"><i class="fas fa-pen-fancy"></i> Creative Writing</a></li>
-                        <li><a href="#"><i class="fas fa-project-diagram"></i> Data Structures</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> Basic History</a></li>
+                        <li><a href="#"><i class="fas fa-map-marked-alt"></i> Geography</a></li>
+                        <li><a href="#"><i class="fas fa-flask"></i> Simple Experiments</a></li>
+                        <li><a href="#"><i class="fas fa-heartbeat"></i> Health Education</a></li>
+                        <li><a href="#"><i class="fas fa-laptop"></i> Computer Basics</a></li>
                     </ul>
                 </div>
+            </div>
 
-                <div class="sidebar-card">
-                    <h3 class="sidebar-title">Subscribe to Newsletter</h3>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your Email" required>
-                        <textarea placeholder="Your Message (Optional)" rows="3"></textarea>
-                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
-                    </form>
+            <!-- Junior High -->
+            <div class="subject-category">
+                <div class="category-header">
+                    <i class="fas fa-user-graduate"></i>
+                    <h2>Junior High</h2>
                 </div>
-            </aside>
+                <div class="subject-list-container">
+                    <ul class="subject-list">
+                        <li><a href="algebra.html"><i class="fas fa-x-ray"></i> Algebra</a></li>
+                        <li><a href="#"><i class="fas fa-dna"></i> Biology</a></li>
+                        <li><a href="#"><i class="fas fa-landmark"></i> World History</a></li>
+                        <li><a href="#"><i class="fas fa-book-open"></i> Literature</a></li>
+                        <li><a href="#"><i class="fas fa-mountain"></i> Earth Science</a></li>
+                        <li><a href="#"><i class="fas fa-flask"></i> Chemistry</a></li>
+                        <li><a href="#"><i class="fas fa-globe"></i> Geography</a></li>
+                        <li><a href="#"><i class="fas fa-paint-brush"></i> Fine Arts</a></li>
+                        <li><a href="#"><i class="fas fa-music"></i> Music Theory</a></li>
+                        <li><a href="#"><i class="fas fa-laptop-code"></i> Computer Science</a></li>
+                        <li><a href="#"><i class="fas fa-running"></i> Physical Education</a></li>
+                        <li><a href="#"><i class="fas fa-language"></i> Foreign Languages</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- High School -->
+            <div class="subject-category">
+                <div class="category-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>High School</h2>
+                </div>
+                <div class="subject-list-container">
+                    <ul class="subject-list">
+                        <li><a href="#"><i class="fas fa-calculator"></i> Calculus</a></li>
+                        <li><a href="#"><i class="fas fa-atom"></i> Physics</a></li>
+                        <li><a href="#"><i class="fas fa-vial"></i> Chemistry</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> Economics</a></li>
+                        <li><a href="#"><i class="fas fa-laptop-code"></i> Computer Science</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Advanced Literature</a></li>
+                        <li><a href="#"><i class="fas fa-dna"></i> Advanced Biology</a></li>
+                        <li><a href="#"><i class="fas fa-globe-europe"></i> World Civilizations</a></li>
+                        <li><a href="#"><i class="fas fa-chart-bar"></i> Statistics</a></li>
+                        <li><a href="#"><i class="fas fa-brain"></i> Psychology</a></li>
+                        <li><a href="#"><i class="fas fa-balance-scale"></i> Government</a></li>
+                        <li><a href="#"><i class="fas fa-business-time"></i> Business Studies</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Undergraduate -->
+            <div class="subject-category">
+                <div class="category-header">
+                    <i class="fas fa-university"></i>
+                    <h2>Undergraduate</h2>
+                </div>
+                <div class="subject-list-container">
+                    <ul class="subject-list">
+                        <li><a href="#"><i class="fas fa-infinity"></i> Advanced Math</a></li>
+                        <li><a href="#"><i class="fas fa-robot"></i> Engineering</a></li>
+                        <li><a href="#"><i class="fas fa-heartbeat"></i> Medicine</a></li>
+                        <li><a href="#"><i class="fas fa-chart-pie"></i> Business</a></li>
+                        <li><a href="#"><i class="fas fa-theater-masks"></i> Humanities</a></li>
+                        <li><a href="#"><i class="fas fa-microscope"></i> Research Methods</a></li>
+                        <li><a href="#"><i class="fas fa-code"></i> Software Development</a></li>
+                        <li><a href="#"><i class="fas fa-chart-line"></i> Data Science</a></li>
+                        <li><a href="#"><i class="fas fa-gavel"></i> Law</a></li>
+                        <li><a href="#"><i class="fas fa-atom"></i> Quantum Physics</a></li>
+                        <li><a href="#"><i class="fas fa-dna"></i> Genetics</a></li>
+                        <li><a href="#"><i class="fas fa-network-wired"></i> Artificial Intelligence</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
+        <!-- Popular Subjects -->
+        <section class="popular-subjects">
+            <h2 class="section-title"><i class="fas fa-star"></i> Popular Subjects</h2>
+            <div class="popular-grid">
+                <div class="popular-card">
+                    <div class="popular-icon">
+                        <i class="fas fa-x-ray"></i>
+                    </div>
+                    <h3>Algebra</h3>
+                    <p>Master equations, functions, and graphs with our comprehensive junior high course.</p>
+                    <a href="algebra.html" class="popular-link">Explore</a>
+                </div>
+
+                <div class="popular-card">
+                    <div class="popular-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Calculus</h3>
+                    <p>Learn derivatives, integrals, and their applications in this high school course.</p>
+                    <a href="#" class="popular-link">Explore</a>
+                </div>
+
+                <div class="popular-card">
+                    <div class="popular-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h3>Biology</h3>
+                    <p>Study life and living organisms, from cells to ecosystems in our junior high program.</p>
+                    <a href="#" class="popular-link">Explore</a>
+                </div>
+
+                <div class="popular-card">
+                    <div class="popular-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Computer Science</h3>
+                    <p>Learn programming fundamentals and computational thinking in high school.</p>
+                    <a href="#" class="popular-link">Explore</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -875,7 +1039,7 @@
                     <ul>
                         <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                         <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-                        <li><a href="#"><i class="fas fa-book"></i> Courses</a></li>
+                        <li><a href="subject.html"><i class="fas fa-book"></i> Subjects</a></li>
                         <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
                         <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                     </ul>

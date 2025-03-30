@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduLearn - Modern Educational Platform</title>
+    <title>Algebra - Junior High Math | EduLearn</title>
+    <meta name="description" content="Master Algebra with interactive lessons, practice problems, and video tutorials for junior high students.">
+    <!-- Schema.org for Course -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "Algebra for Junior High",
+      "description": "Comprehensive Algebra course covering equations, functions, and graphs.",
+      "provider": {
+        "@type": "Organization",
+        "name": "EduLearn",
+        "sameAs": "https://www.edulearn.com"
+      }
+    }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Prevent FOUC */
@@ -383,129 +398,240 @@
             text-align: center;
         }
 
-        /* Main Content */
-        .main-content {
-            display: flex;
-            padding: 40px 0;
+        /* Course Page Specific Styles */
+        .course-hero {
+            margin: 30px 0;
         }
 
-        .content {
-            flex: 3;
-            padding-right: 30px;
-        }
-
-        .sidebar {
-            flex: 1;
-        }
-
-        /* Article Styles */
-        .article {
-            margin-bottom: 30px;
-            background-color: var(--card-bg);
+        .course-banner {
+            position: relative;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .article-img {
+        .course-img {
             width: 100%;
-            height: 200px;
+            height: 300px;
             object-fit: cover;
         }
 
-        .article-content {
-            padding: 20px;
-        }
-
-        .article-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .article-meta {
-            color: var(--light-text);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
-        .article-excerpt {
-            margin-bottom: 15px;
-        }
-
-        .read-more {
-            display: inline-block;
-            padding: 8px 15px;
-            background-color: var(--primary-color);
+        .course-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
             color: white;
-            border-radius: 4px;
-            font-weight: 500;
+            padding: 30px;
         }
 
-        .read-more:hover {
-            background-color: var(--hover-color);
+        .course-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
         }
 
-        /* Sidebar Styles */
-        .sidebar-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
+        .course-title p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            margin: 20px 0;
+            font-size: 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .breadcrumbs a {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumbs a:after {
+            content: '>';
+            margin: 0 5px;
+            color: var(--light-text);
+        }
+
+        .breadcrumbs span {
+            color: var(--light-text);
+        }
+
+        /* Course Content Grid */
+        .course-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 768px) {
+            .course-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Lessons Column */
+        .lessons-column h2,
+        .resources-column h2 {
+            font-size: 1.5rem;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .sidebar-title {
-            font-size: 1.2rem;
+        .lesson-accordion {
+            margin-top: 15px;
+        }
+
+        .lesson-card {
+            background: var(--card-bg);
+            border-radius: 8px;
             margin-bottom: 15px;
-            color: var(--primary-color);
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
         }
 
-        .sidebar-links li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar-links li a {
-            display: block;
-            padding: 8px 0;
+        .lesson-toggle {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: left;
+            background: none;
+            border: none;
             color: var(--text-color);
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .sidebar-links li a:hover {
-            color: var(--primary-color);
+        .lesson-toggle:hover {
+            background: rgba(74, 107, 255, 0.05);
+        }
+
+        .lesson-toggle i {
+            transition: transform 0.3s ease;
+        }
+
+        .lesson-card.active .lesson-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .lesson-details {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .lesson-card.active .lesson-details {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+
+        .lesson-resources {
+            margin-top: 15px;
             padding-left: 5px;
         }
 
-        /* Newsletter Form */
-        .newsletter-form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .newsletter-form input,
-        .newsletter-form textarea {
-            padding: 10px;
+        .lesson-resources li {
             margin-bottom: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            background-color: var(--bg-color);
+        }
+
+        .lesson-resources a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             color: var(--text-color);
-        }
-
-        .newsletter-form button {
-            padding: 10px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
+            padding: 6px 10px;
             border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
         }
 
-        .newsletter-form button:hover {
-            background-color: var(--hover-color);
+        .lesson-resources a:hover {
+            background: rgba(74, 107, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Resources Column */
+        .resource-cards {
+            display: grid;
+            gap: 15px;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .resource-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .resource-card p {
+            color: var(--light-text);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .resource-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .resource-link:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+        }
+
+        /* Related Subjects */
+        .related-subjects {
+            margin-top: 20px;
+        }
+
+        .related-subjects li {
+            margin-bottom: 10px;
+        }
+
+        .related-subjects a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 4px;
+        }
+
+        .related-subjects a:hover {
+            background: rgba(74, 107, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Dark Mode Adjustments */
+        .dark-mode .course-banner {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-mode .resource-card,
+        .dark-mode .lesson-card {
+            background: var(--secondary-color);
         }
 
         /* Footer Styles */
@@ -590,7 +716,7 @@
 
         /* Responsive Styles */
         @media (max-width: 1024px) {
-            .main-content {
+            .course-content {
                 flex-direction: column;
             }
             
@@ -652,7 +778,7 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li class="subject-menu">
-                        <a href="subject.html" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
+                        <a href="#" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
                         <div class="subject-dropdown">
                             <div class="subject-columns">
                                 <div class="subject-column">
@@ -768,8 +894,8 @@
                                 <li><a href="#"><i class="fas fa-child"></i> Kindergarten</a></li>
                                 <li><a href="#"><i class="fas fa-school"></i> Elementary</a></li>
                                 <li><a href="#"><i class="fas fa-user-graduate"></i> Junior High</a></li>
+                                <li><a href="algebra.html"><i class="fas fa-x-ray"></i> Algebra</a></li>
                                 <li><a href="#"><i class="fas fa-graduation-cap"></i> High School</a></li>
-                                <li><a href="#"><i class="fas fa-university"></i> Undergraduate</a></li>
                             </ul>
                         </div>
                     </li>
@@ -791,71 +917,129 @@
     </header>
 
     <main class="container">
-        <div class="main-content">
-            <div class="content">
-                <article class="article">
-                    <img src="image.webp" alt="Education" class="article-img">
-                    <div class="article-content">
-                        <h2 class="article-title">The Future of Online Education</h2>
-                        <div class="article-meta">Posted on June 15, 2023 by Admin</div>
-                        <p class="article-excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
-                        <a href="#" class="read-more">Read More</a>
-                    </div>
-                </article>
+        <!-- Course Hero Banner -->
+        <section class="course-hero">
+            <div class="course-banner">
+                <img src="image.webp" alt="Algebra Course Banner" class="course-img" loading="lazy">
+                <div class="course-title">
+                    <h1>Algebra</h1>
+                    <p>Master equations, functions, and graphs in this comprehensive junior high course</p>
+                </div>
+            </div>
+        </section>
 
-                <article class="article">
-                    <img src="image.webp" alt="Students" class="article-img">
-                    <div class="article-content">
-                        <h2 class="article-title">Effective Study Techniques</h2>
-                        <div class="article-meta">Posted on June 10, 2023 by Educator</div>
-                        <p class="article-excerpt">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
-                        <a href="#" class="read-more">Read More</a>
-                    </div>
-                </article>
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs">
+            <a href="index.html">Home</a>
+            <a href="subject.html">Subjects</a>
+            <a href="junior-high.html">Junior High</a>
+            <span>Algebra</span>
+        </nav>
 
-                <article class="article">
-                    <img src="image.webp" alt="Technology" class="article-img">
-                    <div class="article-content">
-                        <h2 class="article-title">Technology in Modern Classrooms</h2>
-                        <div class="article-meta">Posted on June 5, 2023 by Tech Expert</div>
-                        <p class="article-excerpt">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
-                        <a href="#" class="read-more">Read More</a>
+        <!-- Main Content Grid -->
+        <div class="course-content">
+            <!-- Lessons Column -->
+            <div class="lessons-column">
+                <h2><i class="fas fa-list-ol"></i> Course Lessons</h2>
+                
+                <div class="lesson-accordion">
+                    <!-- Lesson 1 -->
+                    <div class="lesson-card active">
+                        <button class="lesson-toggle">
+                            <span>1. Introduction to Variables</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lesson-details">
+                            <p>Understand the foundation of algebra by learning about variables, constants, and expressions.</p>
+                            <ul class="lesson-resources">
+                                <li><a href="#"><i class="fas fa-video"></i> Video Lecture (12:45)</a></li>
+                                <li><a href="#"><i class="fas fa-file-pdf"></i> Study Notes (PDF)</a></li>
+                                <li><a href="#"><i class="fas fa-question-circle"></i> Practice Problems (10 Qs)</a></li>
+                            </ul>
+                        </div>
                     </div>
-                </article>
+
+                    <!-- Lesson 2 -->
+                    <div class="lesson-card">
+                        <button class="lesson-toggle">
+                            <span>2. Solving Linear Equations</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lesson-details">
+                            <p>Step-by-step methods to solve single-variable linear equations with practical examples.</p>
+                            <ul class="lesson-resources">
+                                <li><a href="#"><i class="fas fa-video"></i> Video Lecture (18:30)</a></li>
+                                <li><a href="#"><i class="fas fa-file-pdf"></i> Equation Cheat Sheet</a></li>
+                                <li><a href="#"><i class="fas fa-question-circle"></i> Interactive Quiz</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Lesson 3 -->
+                    <div class="lesson-card">
+                        <button class="lesson-toggle">
+                            <span>3. Graphing Basics</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lesson-details">
+                            <p>Learn to plot points, understand the coordinate plane, and graph simple linear equations.</p>
+                            <ul class="lesson-resources">
+                                <li><a href="#"><i class="fas fa-video"></i> Video Lecture (15:20)</a></li>
+                                <li><a href="#"><i class="fas fa-file-pdf"></i> Graph Paper Templates</a></li>
+                                <li><a href="#"><i class="fas fa-laptop-code"></i> Graphing Tool</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Lesson 4 -->
+                    <div class="lesson-card">
+                        <button class="lesson-toggle">
+                            <span>4. Polynomials Introduction</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lesson-details">
+                            <p>Discover how to add, subtract, and multiply polynomial expressions.</p>
+                            <ul class="lesson-resources">
+                                <li><a href="#"><i class="fas fa-video"></i> Video Lecture (22:10)</a></li>
+                                <li><a href="#"><i class="fas fa-file-pdf"></i> Polynomials Workbook</a></li>
+                                <li><a href="#"><i class="fas fa-question-circle"></i> Challenge Problems</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <aside class="sidebar">
-                <div class="sidebar-card">
-                    <h3 class="sidebar-title">Popular Topics</h3>
-                    <ul class="sidebar-links">
-                        <li><a href="#"><i class="fas fa-square-root-alt"></i> Mathematics Fundamentals</a></li>
-                        <li><a href="#"><i class="fas fa-flask"></i> Science Experiments</a></li>
-                        <li><a href="#"><i class="fas fa-landmark"></i> History Timeline</a></li>
-                        <li><a href="#"><i class="fas fa-book-open"></i> Literature Analysis</a></li>
-                        <li><a href="#"><i class="fas fa-code"></i> Programming Basics</a></li>
-                    </ul>
+            <!-- Resources Column -->
+            <div class="resources-column">
+                <h2><i class="fas fa-tools"></i> Learning Tools</h2>
+                
+                <div class="resource-cards">
+                    <div class="resource-card">
+                        <h3><i class="fas fa-calculator"></i> Algebra Calculator</h3>
+                        <p>Solve equations, factor polynomials, and simplify expressions with our interactive tool.</p>
+                        <a href="#" class="resource-link">Launch Calculator</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3><i class="fas fa-book"></i> Digital Textbook</h3>
+                        <p>Complete Algebra reference with examples and chapter exercises.</p>
+                        <a href="#" class="resource-link">Open Textbook</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3><i class="fas fa-chart-line"></i> Progress Tracker</h3>
+                        <p>Monitor your learning journey and identify areas for improvement.</p>
+                        <a href="#" class="resource-link">View Dashboard</a>
+                    </div>
                 </div>
 
-                <div class="sidebar-card">
-                    <h3 class="sidebar-title">Recently Added</h3>
-                    <ul class="sidebar-links">
-                        <li><a href="#"><i class="fas fa-calculator"></i> Advanced Calculus</a></li>
-                        <li><a href="#"><i class="fas fa-vial"></i> Organic Chemistry</a></li>
-                        <li><a href="#"><i class="fas fa-history"></i> World War II History</a></li>
-                        <li><a href="#"><i class="fas fa-pen-fancy"></i> Creative Writing</a></li>
-                        <li><a href="#"><i class="fas fa-project-diagram"></i> Data Structures</a></li>
-                    </ul>
-                </div>
-
-                <div class="sidebar-card">
-                    <h3 class="sidebar-title">Subscribe to Newsletter</h3>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your Email" required>
-                        <textarea placeholder="Your Message (Optional)" rows="3"></textarea>
-                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
-                    </form>
-                </div>
-            </aside>
+                <h2><i class="fas fa-random"></i> Related Subjects</h2>
+                <ul class="related-subjects">
+                    <li><a href="geometry.html"><i class="fas fa-shapes"></i> Geometry</a></li>
+                    <li><a href="pre-calculus.html"><i class="fas fa-chart-line"></i> Pre-Calculus</a></li>
+                    <li><a href="statistics.html"><i class="fas fa-chart-bar"></i> Statistics</a></li>
+                </ul>
+            </div>
         </div>
     </main>
 
@@ -1048,27 +1232,30 @@
             });
         });
 
-        // Subject Filter Functionality
-        document.querySelectorAll('.subject-filters button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const column = this.closest('.subject-column');
+        // Lesson Accordion Functionality
+        document.querySelectorAll('.lesson-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const lessonCard = button.closest('.lesson-card');
+                const isActive = lessonCard.classList.contains('active');
                 
-                // Update active state
-                column.querySelectorAll('.subject-filters button').forEach(b => {
-                    b.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                // Filter items
-                const filter = this.dataset.filter;
-                column.querySelectorAll('ul li').forEach(item => {
-                    if (filter === 'all') {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = item.dataset.category === filter ? 'flex' : 'none';
+                // Close all other open lessons
+                document.querySelectorAll('.lesson-card.active').forEach(card => {
+                    if (card !== lessonCard) {
+                        card.classList.remove('active');
                     }
                 });
+                
+                // Toggle current lesson
+                lessonCard.classList.toggle('active', !isActive);
             });
+        });
+
+        // Auto-open first lesson on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstLesson = document.querySelector('.lesson-card');
+            if (firstLesson) {
+                firstLesson.classList.add('active');
+            }
         });
     </script>
 </body>
