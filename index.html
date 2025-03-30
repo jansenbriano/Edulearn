@@ -342,47 +342,6 @@
             background-color: var(--secondary-color);
         }
 
-        /* Mobile Subject Dropdown */
-        .mobile-subject-toggle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            color: var(--text-color);
-            cursor: pointer;
-        }
-
-        .mobile-subject-toggle:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .mobile-subject-dropdown {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background-color: var(--card-bg);
-        }
-
-        .mobile-subject-dropdown.active {
-            max-height: 1000px;
-        }
-
-        .mobile-subject-dropdown ul {
-            padding-left: 0;
-        }
-
-        .mobile-subject-dropdown ul li a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-left: 30px;
-        }
-
-        .mobile-subject-dropdown ul li a i {
-            width: 18px;
-            text-align: center;
-        }
-
         /* Main Content */
         .main-content {
             display: flex;
@@ -405,6 +364,17 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .article::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         .article-img {
@@ -415,6 +385,8 @@
 
         .article-content {
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .article-title {
@@ -440,6 +412,8 @@
             color: white;
             border-radius: 4px;
             font-weight: 500;
+            position: relative;
+            z-index: 2;
         }
 
         .read-more:hover {
@@ -637,6 +611,12 @@
             nav.mobile-nav {
                 display: none;
             }
+
+            /* Hover styles for desktop subject menu */
+            .subject-menu:hover .subject-dropdown,
+            .subject-dropdown:hover {
+                display: block;
+            }
         }
     </style>
 </head>
@@ -644,7 +624,7 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSAyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSAyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA9LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
                 <h1>EduLearn</h1>
             </div>
 
@@ -759,19 +739,7 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li>
-                        <div class="mobile-subject-toggle">
-                            <span><i class="fas fa-book-open"></i> Subjects</span>
-                            <span>+</span>
-                        </div>
-                        <div class="mobile-subject-dropdown">
-                            <ul>
-                                <li><a href="#"><i class="fas fa-child"></i> Kindergarten</a></li>
-                                <li><a href="#"><i class="fas fa-school"></i> Elementary</a></li>
-                                <li><a href="#"><i class="fas fa-user-graduate"></i> Junior High</a></li>
-                                <li><a href="#"><i class="fas fa-graduation-cap"></i> High School</a></li>
-                                <li><a href="#"><i class="fas fa-university"></i> Undergraduate</a></li>
-                            </ul>
-                        </div>
+                        <a href="subject.html"><i class="fas fa-book-open"></i> Subjects</a>
                     </li>
                     <li><a href="guide.html"><i class="fas fa-map"></i> Guide</a></li>
                     <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
@@ -793,7 +761,7 @@
     <main class="container">
         <div class="main-content">
             <div class="content">
-                <article class="article">
+                <article class="article" data-article-link="#">
                     <img src="image.webp" alt="Education" class="article-img">
                     <div class="article-content">
                         <h2 class="article-title">The Future of Online Education</h2>
@@ -803,7 +771,7 @@
                     </div>
                 </article>
 
-                <article class="article">
+                <article class="article" data-article-link="#">
                     <img src="image.webp" alt="Students" class="article-img">
                     <div class="article-content">
                         <h2 class="article-title">Effective Study Techniques</h2>
@@ -813,7 +781,7 @@
                     </div>
                 </article>
 
-                <article class="article">
+                <article class="article" data-article-link="#">
                     <img src="image.webp" alt="Technology" class="article-img">
                     <div class="article-content">
                         <h2 class="article-title">Technology in Modern Classrooms</h2>
@@ -928,6 +896,17 @@
             
             // Now show the page
             document.body.classList.add('loaded');
+
+            // Add click handlers for articles
+            document.querySelectorAll('.article').forEach(article => {
+                article.addEventListener('click', function(e) {
+                    // Don't navigate if clicking on a link inside the article
+                    if (e.target.tagName === 'A' || e.target.closest('a')) {
+                        return;
+                    }
+                    window.location.href = this.getAttribute('data-article-link');
+                });
+            });
         });
 
         // Theme Toggle Functionality
@@ -958,26 +937,54 @@
         });
 
         // Subject Dropdown - Desktop
+        const subjectMenu = document.querySelector('.subject-menu');
         const subjectLink = document.getElementById('subject-link');
         const subjectDropdown = document.querySelector('.subject-dropdown');
+        let dropdownTimeout;
 
-        subjectLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            subjectDropdown.classList.toggle('active');
+        // Show dropdown on hover
+        subjectMenu.addEventListener('mouseenter', function() {
+            clearTimeout(dropdownTimeout);
+            subjectDropdown.classList.add('active');
         });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.subject-menu') && subjectDropdown.classList.contains('active')) {
+        // Hide dropdown when mouse leaves the menu area
+        subjectMenu.addEventListener('mouseleave', function(e) {
+            // Check if we're moving to the dropdown
+            const relatedTarget = e.relatedTarget;
+            if (relatedTarget && !subjectDropdown.contains(relatedTarget)) {
+                dropdownTimeout = setTimeout(() => {
+                    if (!subjectDropdown.matches(':hover')) {
+                        subjectDropdown.classList.remove('active');
+                    }
+                }, 100);
+            }
+        });
+
+        // Keep dropdown active when hovering over it
+        subjectDropdown.addEventListener('mouseenter', function() {
+            clearTimeout(dropdownTimeout);
+            subjectDropdown.classList.add('active');
+        });
+
+        // Hide dropdown when leaving it
+        subjectDropdown.addEventListener('mouseleave', function() {
+            dropdownTimeout = setTimeout(() => {
                 subjectDropdown.classList.remove('active');
+            }, 200);
+        });
+
+        // Allow clicking the subject link to navigate
+        subjectLink.addEventListener('click', function(e) {
+            // Only navigate if we're not clicking on the dropdown
+            if (!e.target.closest('.subject-dropdown')) {
+                window.location.href = this.href;
             }
         });
 
         // Close dropdown on scroll
         window.addEventListener('scroll', function() {
-            if (subjectDropdown.classList.contains('active')) {
-                subjectDropdown.classList.remove('active');
-            }
+            subjectDropdown.classList.remove('active');
         });
 
         // Mobile Navigation Toggle
@@ -990,29 +997,11 @@
             mobileNav.classList.toggle('active');
         });
 
-        // Mobile Subject Dropdown Toggle
-        const mobileSubjectToggle = document.querySelector('.mobile-subject-toggle');
-        const mobileSubjectDropdown = document.querySelector('.mobile-subject-dropdown');
-
-        if (mobileSubjectToggle) {
-            mobileSubjectToggle.addEventListener('click', function() {
-                const isExpanded = this.querySelector('span:last-child').textContent === '-';
-                this.querySelector('span:last-child').textContent = isExpanded ? '+' : '-';
-                mobileSubjectDropdown.classList.toggle('active');
-            });
-        }
-
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.header-container') && mobileNav.classList.contains('active')) {
                 mobileNav.classList.remove('active');
                 mobileNavToggle.setAttribute('aria-expanded', 'false');
-                
-                // Also close any open subject dropdowns
-                if (mobileSubjectDropdown.classList.contains('active')) {
-                    mobileSubjectDropdown.classList.remove('active');
-                    mobileSubjectToggle.querySelector('span:last-child').textContent = '+';
-                }
             }
         });
 
@@ -1021,12 +1010,6 @@
             if (mobileNav.classList.contains('active')) {
                 mobileNav.classList.remove('active');
                 mobileNavToggle.setAttribute('aria-expanded', 'false');
-                
-                // Also close any open subject dropdowns
-                if (mobileSubjectDropdown.classList.contains('active')) {
-                    mobileSubjectDropdown.classList.remove('active');
-                    mobileSubjectToggle.querySelector('span:last-child').textContent = '+';
-                }
             }
         });
 
