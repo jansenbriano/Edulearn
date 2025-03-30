@@ -342,6 +342,104 @@
             background-color: var(--secondary-color);
         }
 
+        /* Mobile Subject Dropdown */
+        .mobile-subject-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 20px;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-subject-dropdown.active {
+            max-height: 500px;
+        }
+
+        .mobile-subject-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+        }
+
+        .mobile-subject-toggle:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .mobile-subject-dropdown ul li {
+            border-bottom: none;
+        }
+
+        .mobile-subject-dropdown ul li a {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .breadcrumb ul {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 8px;
+            color: var(--light-text);
+        }
+
+        .breadcrumb li a {
+            color: var(--primary-color);
+        }
+
+        .breadcrumb li:last-child {
+            color: var(--light-text);
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px 0 0 4px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .search-container button {
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: var(--hover-color);
+        }
+
         /* Main Content */
         .main-content {
             display: flex;
@@ -731,7 +829,7 @@
                     <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
                     <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                     <li class="theme-toggle desktop">
-                        <span><i class="fas fa-moon"></i></span>
+                        <span>Dark Mode</span>
                         <label class="switch">
                             <input type="checkbox" id="theme-toggle">
                             <span class="slider"></span>
@@ -766,8 +864,8 @@
                     <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
                     <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                     <li class="theme-toggle mobile">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0px;">
-                            
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;">
+                            <span>Dark Mode</span>
                             <label class="switch">
                                 <input type="checkbox" id="mobile-theme-toggle">
                                 <span class="slider"></span>
@@ -780,6 +878,19 @@
     </header>
 
     <main class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class="breadcrumb">
+            <ul>
+                <li>Home</li>
+            </ul>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" placeholder="Search for courses, subjects, or articles...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+
         <div class="main-content">
             <div class="content">
                 <article class="article" data-article-link="#">
@@ -1033,6 +1144,7 @@
                 mobileNavToggle.setAttribute('aria-expanded', 'false');
             }
         });
+
         // Mobile Subject Dropdown Toggle
         const mobileSubjectToggle = document.querySelector('.mobile-subject-toggle');
         const mobileSubjectDropdown = document.querySelector('.mobile-subject-dropdown');
@@ -1044,6 +1156,7 @@
                 mobileSubjectDropdown.classList.toggle('active');
             });
         }
+
         // Go to Top Button Functionality
         const goToTopButton = document.querySelector('.go-to-top');
 
@@ -1083,6 +1196,26 @@
                     }
                 });
             });
+        });
+
+        // Search Functionality
+        const searchInput = document.querySelector('.search-container input');
+        const searchButton = document.querySelector('.search-container button');
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                alert(`Searching for: ${query}\nThis would normally redirect to search results.`);
+                // In a real implementation, you would redirect to a search page or fetch results
+                // window.location.href = `/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
         });
     </script>
 </body>
