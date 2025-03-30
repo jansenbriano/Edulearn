@@ -1024,7 +1024,17 @@
                 mobileNavToggle.setAttribute('aria-expanded', 'false');
             }
         });
+        // Mobile Subject Dropdown Toggle
+        const mobileSubjectToggle = document.querySelector('.mobile-subject-toggle');
+        const mobileSubjectDropdown = document.querySelector('.mobile-subject-dropdown');
 
+        if (mobileSubjectToggle) {
+            mobileSubjectToggle.addEventListener('click', function() {
+                const isExpanded = this.querySelector('span:last-child').textContent === '-';
+                this.querySelector('span:last-child').textContent = isExpanded ? '+' : '-';
+                mobileSubjectDropdown.classList.toggle('active');
+            });
+        }
         // Go to Top Button Functionality
         const goToTopButton = document.querySelector('.go-to-top');
 
