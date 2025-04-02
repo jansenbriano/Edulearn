@@ -488,6 +488,31 @@
             border: none;
         }
 
+        /* Breadcrumbs */
+        .breadcrumbs {
+            margin: 20px 0;
+            font-size: 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .breadcrumbs a {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumbs a:after {
+            content: '>';
+            margin: 0 5px;
+            color: var(--light-text);
+        }
+
+        .breadcrumbs span {
+            color: var(--light-text);
+        }
+
         /* Footer Styles */
         footer {
             background-color: var(--footer-bg);
@@ -628,12 +653,14 @@
             <nav class="desktop-nav">
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    
+                    <!-- this part is to make the Subjects have a dropdown -->
                     <li class="subject-menu">
-                        <a href="subject.html" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
+                        <a href="subjects\subject.html" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
                         <div class="subject-dropdown">
                             <div class="subject-columns">
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-child"></i> Kindergarten</h3>
+                                    <h3><a href="kindergarten.html"><i class="fas fa-child"></i> Kindergarten</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -649,7 +676,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-school"></i> Elementary</h3>
+                                    <h3><a href="elementary.html"><i class="fas fa-school"></i> Elementary</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -665,7 +692,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-user-graduate"></i> Junior High</h3>
+                                    <h3><a href="junior-high.html"><i class="fas fa-user-graduate"></i> Junior High</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -681,7 +708,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-graduation-cap"></i> High School</h3>
+                                    <h3><a href="high-school.html"><i class="fas fa-graduation-cap"></i> High School</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -697,7 +724,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-university"></i> Undergraduate</h3>
+                                    <h3><a href="undergraduate.html"><i class="fas fa-university"></i> Undergraduate</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="stem">STEM</button>
@@ -719,6 +746,7 @@
                     <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
                     <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                     <li class="theme-toggle desktop">
+                        <!-- <span><i class="fas fa-moon"></i></span> -->
                         <label class="switch">
                             <input type="checkbox" id="theme-toggle">
                             <span class="slider"></span>
@@ -741,11 +769,11 @@
                         </div>
                         <div class="mobile-subject-dropdown">
                             <ul>
-                                <li><a href="#">Kindergarten</a></li>
-                                <li><a href="#">Elementary School</a></li>
-                                <li><a href="#">Junior High School</a></li>
-                                <li><a href="#">Senior High School</a></li>
-                                <li><a href="#">Undergraduate</a></li>
+                                <li><a href="kindergarten.html"><i class="fas fa-child"></i> Kindergarten</a></li>
+                                <li><a href="elementary.html"><i class="fas fa-school"></i> Elementary</a></li>
+                                <li><a href="junior-high.html"><i class="fas fa-user-graduate"></i> Junior High</a></li>
+                                <li><a href="high-school.html"><i class="fas fa-graduation-cap"></i> High School</a></li>
+                                <li><a href="undergraduate.html"><i class="fas fa-university"></i> Undergraduate</a></li>
                             </ul>
                         </div>
                     </li>
@@ -766,6 +794,12 @@
     </header>
 
     <main class="container">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs">
+            <a href="index.html">Home</a>
+            <span>Contact</span>
+        </nav>
+
         <div class="contact-container">
             <div class="contact-info">
                 <div class="contact-card">
@@ -1085,6 +1119,57 @@
                 contactForm.reset();
             });
         }
+        // <!-- And add this JavaScript -->
+        // Subject Dropdown - Desktop
+        const subjectMenu = document.querySelector('.subject-menu');
+        // const subjectLink = document.getElementById('subject-link');
+        // const subjectDropdown = document.querySelector('.subject-dropdown');
+        let dropdownTimeout;
+
+        // Show dropdown on hover
+        subjectMenu.addEventListener('mouseenter', function() {
+            clearTimeout(dropdownTimeout);
+            subjectDropdown.classList.add('active');
+        });
+
+        // Hide dropdown when mouse leaves the menu area
+        subjectMenu.addEventListener('mouseleave', function(e) {
+            // Check if we're moving to the dropdown
+            const relatedTarget = e.relatedTarget;
+            if (relatedTarget && !subjectDropdown.contains(relatedTarget)) {
+                dropdownTimeout = setTimeout(() => {
+                    if (!subjectDropdown.matches(':hover')) {
+                        subjectDropdown.classList.remove('active');
+                    }
+                }, 100);
+            }
+        });
+
+        // Keep dropdown active when hovering over it
+        subjectDropdown.addEventListener('mouseenter', function() {
+            clearTimeout(dropdownTimeout);
+            subjectDropdown.classList.add('active');
+        });
+
+        // Hide dropdown when leaving it
+        subjectDropdown.addEventListener('mouseleave', function() {
+            dropdownTimeout = setTimeout(() => {
+                subjectDropdown.classList.remove('active');
+            }, 200);
+        });
+
+        // Allow clicking the subject link to navigate
+        subjectLink.addEventListener('click', function(e) {
+            // Only navigate if we're not clicking on the dropdown
+            if (!e.target.closest('.subject-dropdown')) {
+                window.location.href = this.href;
+            }
+        });
+
+        // Close dropdown on scroll
+        window.addEventListener('scroll', function() {
+            subjectDropdown.classList.remove('active');
+        });
     </script>
 </body>
 </html>

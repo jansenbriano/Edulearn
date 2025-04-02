@@ -379,34 +379,43 @@
         }
 
         /* Breadcrumb Navigation */
-        .breadcrumbs {
-            margin: 20px 0;
-            font-size: 0.9rem;
+        .breadcrumb {
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .breadcrumb ul {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            align-items: center;
+            gap: 8px;
         }
 
-        .breadcrumbs a {
-            color: var(--primary-color);
+        .breadcrumb li {
             display: flex;
             align-items: center;
+            font-size: 0.9rem;
         }
 
-        .breadcrumbs a:after {
-            content: '>';
-            margin: 0 5px;
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 8px;
             color: var(--light-text);
         }
 
-        .breadcrumbs span {
+        .breadcrumb li a {
+            color: var(--primary-color);
+        }
+
+        .breadcrumb li:last-child {
             color: var(--light-text);
         }
 
         /* Search Bar */
         .search-container {
             display: flex;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
         }
 
         .search-container input {
@@ -722,7 +731,7 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSAyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA5LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE2YmZmIiBkPSJNNDk0LjIgMjIxLjRsLTIzLjItMTkuN2MtOC4zLTctMTEuNC0xOC44LTcuNy0yOS4xIDMuNy0xMC4yIDEyLjktMTcuMSAyMy41LTE3LjFoMzBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC00MGMtMTMuMyAwLTI0IDEwLjctMjQgMjR2MTE3LjgtMzAuMi0yNS41Yy0xMy4yLTExLTMyLjktOS43LTQ0LjEgMy41cy05LjcgMzIuOSAzLjUgNDQuMWwxMjggMTA2LjZjNi4xIDUuMSA9LjkgMTIuOCA5LjkgMjAuOXYxNDRjMCAxMy4zIDEwLjcgMjQgMjQgMjRoNDBjMTMuMyAwIDI0LTEwLjcgMjQtMjR2LTE2YzAtMTMuMy0xMC43LTI0LTI0LTI0aC0zMGMtMTAuNiAwLTE5LjgtNi45LTIzLjUtMTcuMXMtLjYtMjIuMSA3LjctMjkuMWwyMy4yLTE5LjdjMTIuMS0xMC4yIDE5LjEtMjQuOCAxOS4xLTQwIDAtMTUuMi03LjEtMjkuOC0xOS4xLTQwem0tMzY2LjIgMzQuNmMwLTE1LjIgNy4xLTI5LjggMTkuMS00MGwyMy4yLTE5LjdjOC4zLTcgMTEuNC0xOC44IDcuNy0yOS4xUzE0Ni43IDEyOCAxMzYuMSAxMjhIMTA2Yy0xMy4zIDAtMjQgMTAuNy0yNCAyNHYxNmMwIDEzLjMgMTAuNyAyNCAyNCAyNGgzMGMxMC42IDAgMTkuOCA2LjkgMjMuNSAxNy4xIDMuNyAxMC4yLjYgMjIuMS03LjcgMjkuMWwtMjMuMiAxOS43Yy0xMi4xIDEwLjItMTkuMSAyNC44LTE5LjEgNDBzNy4xIDI5LjggMTkuMSA0MGwyMy4yIDE5LjdjOC4zIDcgMTEuNCAxOC44IDcuNyAyOS4xLTMuNyAxMC4yLTEyLjkgMTcuMS0yMy41IDE3LjFIMTA2Yy0xMy4zIDAtMjQtMTAuNy0yNC0yNHYtMTZjMC0xMS4zIDcuOS0yMC44IDE4LjUtMjMuNXoiLz48L3N2Zz4=" alt="EduLearn Logo">
                 <h1>EduLearn</h1>
             </div>
 
@@ -730,11 +739,11 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li class="subject-menu">
-                        <a href="subject.html" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
+                        <a href="subjects\subject.html" id="subject-link"><i class="fas fa-book-open"></i> Subjects</a>
                         <div class="subject-dropdown">
                             <div class="subject-columns">
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-child"></i> Kindergarten</h3>
+                                    <h3><a href="../subjects\kindergarten\kindergarten.html"><i class="fas fa-child"></i> Kindergarten</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -750,7 +759,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-school"></i> Elementary</h3>
+                                    <h3><a href="../subjects\elementary\elementary.html"><i class="fas fa-school"></i> Elementary</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -766,7 +775,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-user-graduate"></i> Junior High</h3>
+                                    <h3><a href="../subjects\junior-high\junior-high.html"><i class="fas fa-user-graduate"></i> Junior High</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -774,7 +783,7 @@
                                         <button data-filter="humanities">Humanities</button>
                                     </div>
                                     <ul>
-                                        <li data-category="math"><a href="algebra.html"><i class="fas fa-x-ray"></i> Algebra</a></li>
+                                        <li data-category="math"><a href="subjects\algebra.html"><i class="fas fa-x-ray"></i> Algebra</a></li>
                                         <li data-category="science"><a href="#"><i class="fas fa-dna"></i> Biology</a></li>
                                         <li data-category="humanities"><a href="#"><i class="fas fa-landmark"></i> World History</a></li>
                                         <li data-category="language"><a href="#"><i class="fas fa-book-open"></i> Literature</a></li>
@@ -782,7 +791,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-graduation-cap"></i> High School</h3>
+                                    <h3><a href="subjects\high-school\high-school.html"><i class="fas fa-graduation-cap"></i> High School</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="math">Math</button>
@@ -798,7 +807,7 @@
                                     </ul>
                                 </div>
                                 <div class="subject-column">
-                                    <h3><i class="fas fa-university"></i> Undergraduate</h3>
+                                    <h3><a href="subjects\undergraduate\undergraduate.html"><i class="fas fa-university"></i> Undergraduate</a></h3>
                                     <div class="subject-filters">
                                         <button class="active" data-filter="all">All</button>
                                         <button data-filter="stem">STEM</button>
@@ -842,11 +851,11 @@
                         </div>
                         <div class="mobile-subject-dropdown">
                             <ul>
-                                <li><a href="#"><i class="fas fa-child"></i> Kindergarten</a></li>
-                                <li><a href="#"><i class="fas fa-school"></i> Elementary</a></li>
-                                <li><a href="#"><i class="fas fa-user-graduate"></i> Junior High</a></li>
-                                <li><a href="#"><i class="fas fa-graduation-cap"></i> High School</a></li>
-                                <li><a href="#"><i class="fas fa-university"></i> Undergraduate</a></li>
+                                <li><a href="subjects\kindergarten\kindergarten.html"><i class="fas fa-child"></i> Kindergarten</a></li>
+                                <li><a href="subjects\elementary\elementary.html"><i class="fas fa-school"></i> Elementary</a></li>
+                                <li><a href="subjects\junior-high\junior-high.html"><i class="fas fa-user-graduate"></i> Junior High</a></li>
+                                <li><a href="subjects\high-school\high-school.html"><i class="fas fa-graduation-cap"></i> High School</a></li>
+                                <li><a href="subjects\undergraduate\undergraduate.html"><i class="fas fa-university"></i> Undergraduate</a></li>
                             </ul>
                         </div>
                     </li>
@@ -868,9 +877,11 @@
 
     <main class="container">
         <!-- Breadcrumb Navigation -->
-        <nav class="breadcrumbs">
-            <span>Home</span>
-        </nav>
+        <div class="breadcrumb">
+            <ul>
+                <li>Home</li>
+            </ul>
+        </div>
 
         <!-- Search Bar -->
         <div class="search-container">
